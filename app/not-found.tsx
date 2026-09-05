@@ -1,5 +1,12 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
+
+export const metadata: Metadata = {
+  title: 'Page not found — Heaven Furniture Mart',
+  description: 'This page does not exist. Return to Heaven Furniture Mart bespoke furniture, Chattogram.',
+  robots: { index: false, follow: true },
+}
 
 export default function NotFound() {
   return (

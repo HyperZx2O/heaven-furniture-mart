@@ -4,12 +4,19 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { useReveal } from '@/lib/useReveal'
+import { useScrollTo } from '@/components/providers/LenisProvider'
 
 const MAPS_URL =
   'https://www.google.com/maps/search/?api=1&query=Heaven+Furniture+Mart+Agrabad+Chattogram'
 
 export function Showroom() {
   const container = useRef<HTMLDivElement>(null)
+  const scrollTo = useScrollTo()
+  const goCta = (e: React.MouseEvent) => {
+    e.preventDefault()
+    scrollTo('#cta')
+    history.pushState(null, '', '#cta')
+  }
   useReveal(container, { selector: '.showroom-visual', y: 18, duration: 0.4, start: 'top 72%', clip: true })
   useReveal(container, { selector: '.showroom-row', y: 12, stagger: 0.06, duration: 0.35, start: 'top 78%' })
 
@@ -44,9 +51,9 @@ export function Showroom() {
             </li>
           </ul>
           <p className="showroom-row mt-6 text-[var(--color-ivory-dim)] font-[var(--font-sans)] font-light text-[0.86rem]">
-            <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="text-[var(--color-gold)] font-normal hover:underline underline-offset-4">Get directions →</a>
+            <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="text-[var(--color-gold)] font-normal hover:underline underline-offset-4">Get directions <span aria-hidden="true">→</span></a>
             <span className="mx-2 opacity-40" aria-hidden="true">·</span>
-            <a href="#cta" className="text-[var(--color-gold)] font-normal hover:underline underline-offset-4">Book a visit on WhatsApp →</a>
+            <a href="#cta" onClick={goCta} className="text-[var(--color-gold)] font-normal hover:underline underline-offset-4">Book a visit on WhatsApp <span aria-hidden="true">→</span></a>
           </p>
         </div>
 

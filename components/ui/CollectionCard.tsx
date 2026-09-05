@@ -16,7 +16,7 @@ export function CollectionCard({ category, products, children, isBespoke = false
   return (
     <div
       onMouseMove={spotlightMove}
-      className="group t-card-resize v2-grain-card relative flex h-full flex-col rounded-[var(--radius-card)] bg-[var(--color-surface)] border border-[var(--color-ivory)]/8 overflow-hidden hover:border-[var(--color-gold)]/30 hover:-translate-y-1 hover:shadow-[0_14px_36px_rgba(0,0,0,0.22)] min-w-0 cursor-pointer"
+      className="group v2-grain-card relative flex h-full flex-col rounded-[var(--radius-card)] bg-[var(--color-surface)] border border-[var(--color-ivory)]/8 overflow-hidden hover:border-[var(--color-gold)]/30 hover:-translate-y-1 hover:shadow-[0_14px_36px_rgba(0,0,0,0.22)] min-w-0 transition-[transform,border-color,box-shadow] duration-[var(--duration-normal)] ease-[var(--ease-spring)] active:scale-[0.99]"
     >
       <div
         className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
@@ -25,13 +25,13 @@ export function CollectionCard({ category, products, children, isBespoke = false
         }}
         aria-hidden="true"
       />
-      <div className="h-[260px] md:h-[280px] flex items-center justify-center overflow-hidden bg-[var(--color-surface-2)] relative">
+      <div className="h-[280px] md:h-[320px] flex items-center justify-center overflow-hidden bg-[var(--color-surface-2)] relative">
         {children}
         {/* soft vignette on hover — tokenized */}
         <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-[var(--duration-normal)] bg-[radial-gradient(ellipse_70%_50%_at_50%_30%,var(--color-wash-gold-08),transparent_70%)]" />
       </div>
       <div className="p-5 flex flex-1 flex-col min-w-0">
-        <h3 className="text-[var(--color-ivory)] font-[var(--font-serif)] font-medium text-[1.22rem] leading-tight [overflow-wrap:anywhere] [word-break:break-word] hyphens-auto min-w-0">
+        <h3 className="text-[var(--color-ivory)] font-[var(--font-serif)] font-medium text-[1.35rem] leading-tight [overflow-wrap:anywhere] [word-break:break-word] hyphens-auto min-w-0">
           {category}
         </h3>
         <p className="mt-1.5 text-[var(--color-ivory-dim)] font-[var(--font-sans)] font-light text-[0.84rem] leading-relaxed [overflow-wrap:anywhere] [word-break:break-word] hyphens-auto min-w-0 min-h-[2.6rem] content-center">

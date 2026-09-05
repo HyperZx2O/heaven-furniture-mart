@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '@/lib/gsap'
 import { Counter } from '@/components/ui/Counter'
+import { useScrollTo } from '@/components/providers/LenisProvider'
 
 
 const milestones = [
@@ -17,6 +18,12 @@ const milestones = [
 
 export function SocialProof() {
   const container = useRef<HTMLDivElement>(null)
+  const scrollTo = useScrollTo()
+  const goCta = (e: React.MouseEvent) => {
+    e.preventDefault()
+    scrollTo('#cta')
+    history.pushState(null, '', '#cta')
+  }
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -69,7 +76,7 @@ export function SocialProof() {
           <blockquote
             className="quote-wrap relative z-10 px-6 md:px-10 lg:px-14 py-10 md:py-14 max-w-[860px] mx-auto text-center"
           >
-            <p className="text-[var(--color-ivory)] font-[var(--font-serif)] font-light italic text-[clamp(1.18rem,2.6vw,1.7rem)] leading-[1.7]">
+            <p className="text-[var(--color-ivory)] font-[var(--font-serif)] font-light italic text-[clamp(1.25rem,2.8vw,2rem)] leading-[1.7]">
               &ldquo;At Heaven Furniture Mart, we believe furniture is more than just function; it is a reflection of lifestyle, taste, and comfort. Every piece we create is designed to bring lasting elegance into the homes of our clients.&rdquo;
             </p>
             <cite className="mt-5 block text-[var(--color-gold-soft)] font-[var(--font-sans)] font-medium text-[0.86rem] not-italic tracking-wide">
@@ -135,7 +142,7 @@ export function SocialProof() {
           </span>
         </div>
         <p className="mt-6 text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.82rem] font-light">
-          Ready? <a href="#cta" className="text-[var(--color-gold)] hover:underline underline-offset-4">WhatsApp us →</a>
+          Ready? <a href="#cta" onClick={goCta} className="text-[var(--color-gold)] hover:underline underline-offset-4">WhatsApp us <span aria-hidden="true">→</span></a>
         </p>
       </div>
     </section>

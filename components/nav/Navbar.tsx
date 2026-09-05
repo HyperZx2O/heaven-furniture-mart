@@ -48,8 +48,11 @@ export function Navbar() {
     }
   }, [])
 
-  // Load liquid-glass script once
+  // Load liquid-glass script once — skip where it can only fall back (Safari/Firefox)
   useEffect(() => {
+    const ua = navigator.userAgent
+    if (/Safari/.test(ua) && !/Chrome|Chromium|Edg/.test(ua)) return
+    if (/Firefox/.test(ua)) return
     if (document.querySelector('script[data-liquid-glass]')) return
     const s = document.createElement('script')
     s.src = '/liquid-glass.js'
@@ -114,10 +117,9 @@ export function Navbar() {
     <>
       <div className="tape-progress" id="tape-progress" aria-hidden="true" />
       <div
-        className={`fixed top-0 left-0 right-0 z-[9990] flex justify-center pointer-events-none transition-[padding] duration-300 ease-[var(--ease-spring)] ${
+        className={`fixed top-[env(safe-area-inset-top)] left-0 right-0 z-[9990] flex justify-center pointer-events-none transition-[padding] duration-300 ease-[var(--ease-spring)] ${
           scrolled ? 'px-3 md:px-6 pt-3' : 'px-0 pt-0'
         }`}
-        aria-hidden={false}
       >
       <nav
         ref={pillRef as React.RefObject<HTMLElement>}
@@ -139,13 +141,13 @@ export function Navbar() {
       >
         <Link
           href="/"
-          className="min-w-0 flex flex-col leading-none"
+          className="min-w-0 flex flex-col leading-none transition-transform active:scale-[0.98]"
         >
           <span className="text-[var(--color-ivory)] font-[var(--font-serif)] font-normal text-[1.15rem] md:text-[1.35rem] tracking-wide overflow-wrap-anywhere">
             Heaven Furniture Mart
           </span>
           <span className="text-[var(--color-gold-soft)] font-[var(--font-sans)] text-[0.66rem] md:text-[0.72rem] tracking-[0.14em] font-normal mt-0.5">
-            Designed · Crafted · Customized
+            Designed. Crafted. Customized.
           </span>
         </Link>
 

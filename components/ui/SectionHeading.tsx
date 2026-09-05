@@ -45,7 +45,7 @@ export function SectionHeading({
   return (
     <div
       ref={container}
-      className="text-left items-start flex flex-col min-w-0"
+      className="text-start items-start flex flex-col min-w-0"
     >
       {eyebrow && (
         <p className="eyebrow inline-flex items-center gap-2 text-[var(--color-gold)] text-[0.78rem] font-[var(--font-sans)] font-medium tracking-[0.14em] mb-4">
@@ -53,7 +53,7 @@ export function SectionHeading({
           {eyebrow}
         </p>
       )}
-      <h2 className="title text-[var(--color-ivory)] font-[var(--font-serif)] font-normal text-[clamp(1.9rem,4vw,2.75rem)] leading-[1.12] overflow-wrap-anywhere max-w-[16ch]">
+      <h2 className="title text-[var(--color-ivory)] font-[var(--font-serif)] font-normal text-[clamp(2rem,4.4vw,3.1rem)] leading-[1.12] overflow-wrap-anywhere max-w-[16ch]">
         {title}
       </h2>
       {subtitle && (

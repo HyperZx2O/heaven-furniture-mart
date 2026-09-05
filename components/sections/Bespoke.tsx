@@ -4,10 +4,17 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '@/lib/gsap'
+import { useScrollTo } from '@/components/providers/LenisProvider'
 
 
 export function Bespoke() {
   const container = useRef<HTMLDivElement>(null)
+  const scrollTo = useScrollTo()
+  const goCta = (e: React.MouseEvent) => {
+    e.preventDefault()
+    scrollTo('#cta')
+    history.pushState(null, '', '#cta')
+  }
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -112,7 +119,7 @@ export function Bespoke() {
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" aria-hidden="true" />
             Bespoke & Custom
           </p>
-          <h2 className="bespoke-animate text-display text-[var(--color-ivory)] font-[var(--font-serif)] font-light text-[clamp(2rem,4vw,3rem)] leading-[1.02]">
+          <h2 className="bespoke-animate text-display text-[var(--color-ivory)] font-[var(--font-serif)] font-light text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.02]">
             Built around<br />
             <span className="bespoke-space text-[var(--color-gold-soft)] underline decoration-[var(--color-gold)]/40 underline-offset-[6px] decoration-1">your space.</span>
           </h2>
@@ -135,7 +142,7 @@ export function Bespoke() {
           </ul>
 
           <p className="bespoke-animate text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.82rem] font-light">
-            Have a room in mind? <a href="#cta" className="text-[var(--color-gold)] hover:underline underline-offset-4">chat on WhatsApp →</a>
+            Have a room in mind? <a href="#cta" onClick={goCta} className="text-[var(--color-gold)] hover:underline underline-offset-4">chat on WhatsApp <span aria-hidden="true">→</span></a>
           </p>
         </div>
       </div>

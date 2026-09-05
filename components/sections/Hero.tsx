@@ -58,7 +58,7 @@ export function Hero() {
       aria-label="Hero"
     >
       {/* Cover — the LCP element */}
-      <div className="absolute inset-0" aria-hidden="false">
+      <div className="absolute inset-0">
         <div className="absolute inset-0">
           <Image
             src="/images/Luxury Embroidery Sofa Set By Heaven Furniture Mart.jpeg"

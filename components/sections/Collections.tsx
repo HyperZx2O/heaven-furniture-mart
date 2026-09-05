@@ -19,6 +19,22 @@ export function Collections() {
   const container = useRef<HTMLDivElement>(null)
   useReveal(container, { selector: '.collection-card', y: 14, stagger: 0.06, duration: 0.35, trigger: '.collections-wrap', start: 'top 80%' })
 
+  // delight: one autonomous sheen sweep across the bespoke card on entry
+  useGSAP(() => {
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.fromTo('.bespoke-sheen',
+        { xPercent: -160, opacity: 1 },
+        {
+          xPercent: 160, opacity: 1, duration: 1.4, ease: 'expo.out', stagger: 0.25,
+          scrollTrigger: { trigger: '.collections-wrap', start: 'top 70%', once: true },
+        })
+    })
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set('.bespoke-sheen', { opacity: 0 })
+    })
+  }, { scope: container })
+
   // desktop: pinned vertical-to-horizontal scrub (native swipe strip stays as fallback)
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -76,6 +92,7 @@ export function Collections() {
           <div className="collection-card min-w-0">
             <CollectionCard category="Bespoke / Custom" products={['Any piece', 'Any size', 'Any material']} isBespoke>
               <div className="w-full h-full relative overflow-hidden bg-[var(--color-surface)] flex flex-col items-center justify-center p-6 text-center">
+                <span className="bespoke-sheen pointer-events-none absolute inset-0" style={{ background: 'linear-gradient(100deg, transparent 30%, rgba(184,151,58,0.14) 50%, transparent 70%)' }} aria-hidden="true" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_30%,var(--color-wash-gold-12),transparent_70%)]" aria-hidden="true" />
                 <span className="relative text-[var(--color-gold)] font-[var(--font-serif)] text-[1.15rem] font-light">Your vision,</span>
                 <span className="relative text-[var(--color-ivory)] font-[var(--font-serif)] text-[1.4rem] font-normal -mt-1">our craft</span>
@@ -100,6 +117,7 @@ export function Collections() {
           <div className="collection-card shrink-0 w-[320px] min-w-0 flex">
             <CollectionCard category="Bespoke / Custom" products={['Any piece', 'Any size', 'Any material']} isBespoke>
               <div className="w-full h-full relative overflow-hidden bg-[var(--color-surface)] flex flex-col items-center justify-center p-6 text-center">
+                <span className="bespoke-sheen pointer-events-none absolute inset-0" style={{ background: 'linear-gradient(100deg, transparent 30%, rgba(184,151,58,0.14) 50%, transparent 70%)' }} aria-hidden="true" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_30%,var(--color-wash-gold-12),transparent_70%)]" aria-hidden="true" />
                 <span className="relative text-[var(--color-gold)] font-[var(--font-serif)] text-[1.15rem] font-light">Your vision,</span>
                 <span className="relative text-[var(--color-ivory)] font-[var(--font-serif)] text-[1.4rem] font-normal -mt-1">our craft</span>

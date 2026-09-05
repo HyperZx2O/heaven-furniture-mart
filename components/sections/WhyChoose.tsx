@@ -75,7 +75,7 @@ export function WhyChoose() {
             <span className="w-6 h-[1px] bg-[var(--color-gold)]/50 hidden sm:inline-block" aria-hidden="true" />
             Why Choose Heaven
           </p>
-            <h2 className="text-display text-[var(--color-ivory)] font-[var(--font-serif)] font-light text-[clamp(2rem,4.2vw,3.15rem)] leading-[1.02] overflow-wrap-anywhere">
+            <h2 className="text-display text-[var(--color-ivory)] font-[var(--font-serif)] font-light text-[clamp(2.1rem,4.6vw,3.4rem)] leading-[1.02] overflow-wrap-anywhere">
               Craft you can <span className="why-feel text-[var(--color-gold-soft)] underline decoration-[var(--color-gold)]/40 underline-offset-[7px] decoration-1">feel,</span> service you can trust.
             </h2>
           <p className="mt-3 text-[var(--color-ivory-dim)] font-[var(--font-sans)] font-light text-[0.98rem] leading-[1.7] max-w-[58ch] overflow-wrap-anywhere">

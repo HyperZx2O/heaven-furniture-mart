@@ -41,7 +41,7 @@ export function CTASection() {
           <span className="text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.76rem] tracking-wide">Free design consultation · No commitment</span>
         </div>
 
-        <h2 className="cta-animate text-display text-[var(--color-ivory)] font-[var(--font-serif)] font-light text-[clamp(1.9rem,4vw,2.9rem)] leading-[1.05]">
+        <h2 className="cta-animate text-display text-[var(--color-ivory)] font-[var(--font-serif)] font-light text-[clamp(2rem,4.4vw,3.3rem)] leading-[1.05]">
           Ready to design<br />
           <span className="cta-scramble text-[var(--color-gold-soft)] font-light underline decoration-[var(--color-gold)]/40 underline-offset-[6px] decoration-1">your space?</span>
         </h2>
