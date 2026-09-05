@@ -30,7 +30,7 @@ export function CTASection() {
       ref={container}
       id="cta"
       style={{ viewTransitionName: 'cta-hero' } as React.CSSProperties}
-      className="relative overflow-hidden px-5 md:px-8 lg:px-10 py-[clamp(3.5rem,8vw,6.5rem)]"
+      className="relative overflow-hidden px-5 md:px-8 lg:px-10 py-[clamp(3.5rem,8vw,6.5rem)] [content-visibility:auto] [contain-intrinsic-size:auto_600px]"
     >
       {/* Soft wash behind CTA — gentle, not harsh */}
       <div className="absolute inset-0 bg-[var(--color-surface)]" aria-hidden="true" />

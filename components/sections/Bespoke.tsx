@@ -28,10 +28,10 @@ export function Bespoke() {
         scrollTrigger: {
           trigger: container.current,
           start: 'top top',
-          end: '+=1600',
+          end: () => `+=${Math.round(window.innerHeight * 2)}`,
           pin: true,
           scrub: 1,
-          anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       })
       tl.fromTo('.bespoke-visual',
@@ -72,7 +72,9 @@ export function Bespoke() {
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 lg:px-10 py-[clamp(3.5rem,8vw,6.5rem)] grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-12 items-center">
         {/* Left — two stacked real photos, no 3D — DOM order = visual order at all breakpoints */}
         <div className="min-w-0">
-          <div className="bespoke-visual relative rounded-[var(--radius-soft)] overflow-hidden bg-[var(--color-bg)] border border-[var(--color-ivory)]/10 shadow-[0_18px_48px_rgba(0,0,0,0.28)]">
+          {/* static shell owns border + shadow so the scaling layer repaints less */}
+          <div className="relative rounded-[var(--radius-soft)] border border-[var(--color-ivory)]/10 shadow-[0_18px_48px_rgba(0,0,0,0.28)]">
+          <div className="bespoke-visual relative rounded-[var(--radius-soft)] overflow-hidden bg-[var(--color-bg)]">
             <div className="relative h-[260px] md:h-[300px] overflow-hidden">
               <Image
                 src="/images/Luxury Dining Table Set.jpg"
@@ -99,6 +101,7 @@ export function Bespoke() {
                 Hand-finished · Premium wood
               </span>
             </div>
+          </div>
           </div>
           <p className="mt-3 text-center text-[var(--color-ivory-dim)] font-[var(--font-sans)] font-light text-[0.74rem]">Recent bespoke pieces from our Agrabad showroom</p>
         </div>

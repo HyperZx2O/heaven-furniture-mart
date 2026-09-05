@@ -21,27 +21,33 @@ export function Process() {
       const items = Array.from(container.current!.querySelectorAll<HTMLElement>('.process-step'))
       const dots = Array.from(container.current!.querySelectorAll<HTMLElement>('.process-dot'))
       const spine = container.current!.querySelector('.draw-line')
-      gsap.set(items, { opacity: 0.35, y: 14 })
+      gsap.set(items, { opacity: 0, y: 14 })
       gsap.set(dots, { scale: 0.6, opacity: 0.4 })
       if (spine) gsap.set(spine, { drawSVG: '0%' })
 
-      // one scrubbed journey: spine fills throughout, steps ignite per quarter
+      // one scrubbed journey: steps ignite per quarter (spine fills via one-shot below)
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
         scrollTrigger: {
           trigger: container.current,
           start: 'top top',
-          end: '+=1200',
+          end: () => `+=${Math.round(window.innerHeight * 1.5)}`,
           pin: true,
           scrub: 1,
-          anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       })
-      if (spine) tl.to(spine, { drawSVG: '100%', duration: 4 }, 0)
       items.forEach((step, i) => {
         tl.to(step, { opacity: 1, y: 0, duration: 1 }, i)
         if (dots[i]) tl.to(dots[i], { scale: 1, opacity: 1, duration: 0.5 }, i + 0.25)
       })
+      // spine fills once on arrival — stroke geometry off the scrubbed repaint path
+      if (spine) {
+        gsap.to(spine, {
+          drawSVG: '100%', duration: 1.1, ease: 'expo.out',
+          scrollTrigger: { trigger: container.current, start: 'top 70%', once: true },
+        })
+      }
     })
 
     mm.add('(prefers-reduced-motion: no-preference) and (max-width: 1023.5px)', () => {

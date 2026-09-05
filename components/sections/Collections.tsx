@@ -39,7 +39,6 @@ export function Collections() {
           end: () => `+=${dist()}`,
           pin: true,
           scrub: 1,
-          anticipatePin: 1,
           invalidateOnRefresh: true,
         },
       })

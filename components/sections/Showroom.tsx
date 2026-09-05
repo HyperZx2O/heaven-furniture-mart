@@ -17,7 +17,7 @@ export function Showroom() {
     <section
       ref={container}
       id="showroom"
-      className="py-[clamp(3.5rem,8vw,6.5rem)] px-5 md:px-8 lg:px-10 bg-[var(--color-surface)] border-y border-[var(--color-ivory)]/8 overflow-x-clip"
+      className="py-[clamp(3.5rem,8vw,6.5rem)] px-5 md:px-8 lg:px-10 bg-[var(--color-surface)] border-y border-[var(--color-ivory)]/8 overflow-x-clip [content-visibility:auto] [contain-intrinsic-size:auto_700px]"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
         {/* Copy */}
