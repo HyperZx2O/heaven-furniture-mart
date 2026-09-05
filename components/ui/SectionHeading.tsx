@@ -1,0 +1,70 @@
+'use client'
+
+import { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap } from '@/lib/gsap'
+import { useSplitLines } from '@/lib/useSplitLines'
+
+interface SectionHeadingProps {
+  eyebrow?: string
+  title: string
+  subtitle?: string
+  align?: 'left' | 'center'
+  className?: string
+}
+
+export function SectionHeading({
+  eyebrow,
+  title,
+  subtitle,
+  align = 'left',
+  className = '',
+}: SectionHeadingProps) {
+  const container = useRef<HTMLDivElement>(null)
+
+  // masked line-rise on the title — one upgrade, every heading on the page
+  useSplitLines(container, { selector: '.title', splitType: 'lines', masked: true })
+
+  useGSAP(() => {
+    const mm = gsap.matchMedia()
+
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const eyebrowEl = container.current?.querySelector('.eyebrow')
+      if (eyebrow && eyebrowEl) {
+        gsap.fromTo(eyebrowEl, { opacity: 0, y: 14 }, {
+          opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
+          scrollTrigger: { trigger: container.current, start: 'top 85%' },
+        })
+      }
+      const subEl = container.current?.querySelector('.subtitle')
+      if (subEl) {
+        gsap.fromTo(subEl, { opacity: 0, y: 16 }, {
+          opacity: 1, y: 0, duration: 0.6, delay: 0.3, ease: 'power3.out',
+          scrollTrigger: { trigger: container.current, start: 'top 80%' },
+        })
+      }
+    })
+  }, { scope: container })
+
+  return (
+    <div
+      ref={container}
+      className={`${align === 'center' ? 'text-center items-center' : 'text-left items-start'} flex flex-col min-w-0 ${className}`}
+    >
+      {eyebrow && (
+        <p className="eyebrow inline-flex items-center gap-2 text-[var(--color-gold)] text-[0.78rem] font-[var(--font-sans)] font-medium tracking-[0.14em] mb-4">
+          <span className="hidden sm:inline-block w-6 h-[1px] bg-[var(--color-gold)]/50" aria-hidden="true" />
+          {eyebrow}
+        </p>
+      )}
+      <h2 className="title text-[var(--color-ivory)] font-[var(--font-serif)] font-normal text-[clamp(1.9rem,4vw,2.75rem)] leading-[1.12] overflow-wrap-anywhere max-w-[16ch]">
+        {title}
+      </h2>
+      {subtitle && (
+        <p className="subtitle mt-4 text-[var(--color-ivory-dim)] font-[var(--font-sans)] font-light text-[0.96rem] leading-[1.7] max-w-[60ch] overflow-wrap-anywhere">
+          {subtitle}
+        </p>
+      )}
+    </div>
+  )
+}
