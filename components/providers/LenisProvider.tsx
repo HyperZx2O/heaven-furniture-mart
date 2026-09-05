@@ -21,9 +21,13 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!lenis) return
-    const update = (time: number) => lenis.raf(time * 1000)
+    const update = (time: number) => {
+      // let the browser truly idle — only pump Lenis while scrolling or animating
+      if (lenis.isScrolling || gsap.globalTimeline.isActive()) {
+        lenis.raf(time * 1000)
+      }
+    }
     gsap.ticker.add(update)
-    gsap.ticker.lagSmoothing(0)
     lenis.on('scroll', ScrollTrigger.update)
 
     return () => {

@@ -35,8 +35,8 @@ export function Bespoke() {
         },
       })
       tl.fromTo('.bespoke-visual',
-        { scale: 0.94, clipPath: 'inset(8% 5% 8% 5%)', opacity: 0 },
-        { scale: 1.03, clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, duration: 1 }, 0)
+        { scale: 0.94, opacity: 0 },
+        { scale: 1.03, opacity: 1, duration: 1 }, 0)
         .fromTo('.bespoke-animate',
           { opacity: 0, y: 26 },
           { opacity: 1, y: 0, stagger: 0.12, duration: 0.5 }, 0.15)

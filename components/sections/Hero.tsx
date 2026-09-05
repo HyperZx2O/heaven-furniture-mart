@@ -19,9 +19,9 @@ export function Hero() {
       const split = new SplitText(headline as HTMLElement, { type: 'chars,words', wordsClass: 'word', charsClass: 'char' })
       const tl = gsap.timeline({ delay: 0.35 })
 
-      gsap.set(split.chars, { opacity: 0, y: 44, filter: 'blur(4px)' })
+      gsap.set(split.chars, { opacity: 0, y: 44 })
       tl.to(split.chars, {
-        opacity: 1, y: 0, filter: 'blur(0px)', stagger: 0.018, duration: 0.5, ease: 'expo.out',
+        opacity: 1, y: 0, stagger: 0.018, duration: 0.5, ease: 'expo.out',
         onComplete: () => split.revert(),
       })
         // closing beat — "you." decodes after the split is reverted
@@ -41,7 +41,7 @@ export function Hero() {
       })
       gsap.to('.hero-content', {
         y: -48, opacity: 0, ease: 'none',
-        scrollTrigger: { trigger: container.current, start: 'top top', end: '70% top', scrub: true },
+        scrollTrigger: { trigger: container.current, start: 'top top', end: '40% top', scrub: true },
       })
     })
 

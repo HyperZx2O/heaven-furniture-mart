@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import Link from 'next/link'
 
 declare global {
@@ -13,20 +13,40 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const pillRef = useRef<HTMLElement>(null)
   const glassRef = useRef<{ destroy: () => void } | null>(null)
+  const glassTimer = useRef<number | null>(null)
+  const glassReady = useRef(false)
+  // weak devices skip the SVG displacement graph — frosted blur is enough
+  const allowGlass = useMemo(
+    () => typeof navigator === 'undefined' || (navigator.hardwareConcurrency || 8) > 4,
+    []
+  )
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80)
+    let ticking = false
+    let raf = 0
+    const render = () => {
+      ticking = false
+      const y = window.scrollY
+      setScrolled(y > 80)
       const p = document.getElementById('tape-progress')
       if (p) {
         const max = document.documentElement.scrollHeight - window.innerHeight
-        const progress = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0
+        const progress = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0
         p.style.transform = `scaleX(${progress})`
+      }
+    }
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true
+        raf = requestAnimationFrame(render)
       }
     }
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   // Load liquid-glass script once
@@ -39,23 +59,27 @@ export function Navbar() {
     document.head.appendChild(s)
   }, [])
 
-  // Apply liquid glass to pill when scrolled
+  // Apply liquid glass to pill once — never destroy/re-attach on scroll toggles.
+  // Weak devices keep the cheap frosted fallback instead of the SVG filter graph.
   useEffect(() => {
-    if (!scrolled) {
-      if (glassRef.current) {
-        glassRef.current.destroy()
-        glassRef.current = null
+    const el = pillRef.current
+    if (!el) return
+    if (!allowGlass) {
+      if (scrolled) {
+        el.style.setProperty('backdrop-filter', 'blur(16px) saturate(1.5)')
+        el.style.setProperty('-webkit-backdrop-filter', 'blur(16px) saturate(1.5)')
+      } else {
+        el.style.removeProperty('backdrop-filter')
+        el.style.removeProperty('-webkit-backdrop-filter')
       }
       return
     }
-    const el = pillRef.current
-    if (!el) return
+    if (!scrolled || glassReady.current) return
     let tries = 0
     const tryAttach = () => {
-      if (window.liquidGlass && el) {
-        // destroy previous
-        if (glassRef.current) glassRef.current.destroy()
-        glassRef.current = window.liquidGlass(el, {
+      if (glassRef.current) return
+      if (window.liquidGlass && pillRef.current) {
+        glassRef.current = window.liquidGlass(pillRef.current, {
           scale: -112,
           chroma: 6,
           border: 0.07,
@@ -64,20 +88,28 @@ export function Navbar() {
           saturate: 1.5,
           fallbackBlur: 16,
         })
+        glassReady.current = true
       } else if (tries < 20) {
         tries++
-        setTimeout(tryAttach, 100)
+        glassTimer.current = window.setTimeout(tryAttach, 100)
       }
     }
     // allow pill to paint with rounded-full before measuring radius
-    requestAnimationFrame(() => setTimeout(tryAttach, 60))
+    const raf = requestAnimationFrame(() => {
+      glassTimer.current = window.setTimeout(tryAttach, 60)
+    })
     return () => {
-      if (glassRef.current) {
-        glassRef.current.destroy()
-        glassRef.current = null
-      }
+      cancelAnimationFrame(raf)
+      if (glassTimer.current) clearTimeout(glassTimer.current)
     }
-  }, [scrolled])
+  }, [scrolled, allowGlass])
+
+  // final teardown on unmount only
+  useEffect(() => () => {
+    if (glassTimer.current) clearTimeout(glassTimer.current)
+    glassRef.current?.destroy()
+    glassRef.current = null
+  }, [])
 
   return (
     <>
@@ -121,7 +153,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-3 shrink-0">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-ivory)]/10 px-3 py-1.5 text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.72rem] tracking-wide">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] animate-pulse" aria-hidden="true" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" aria-hidden="true" />
             Agrabad · Chattogram
           </span>
         </div>

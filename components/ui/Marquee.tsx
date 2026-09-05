@@ -23,6 +23,7 @@ function Strip({ hidden }: { hidden?: boolean }) {
 
 export function Marquee() {
   const container = useRef<HTMLDivElement>(null)
+  const inner = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -38,7 +39,16 @@ export function Marquee() {
         trigger: container.current,
         start: 'top bottom',
         end: 'bottom top',
-        onToggle: (self) => (self.isActive ? tween.play() : tween.pause()),
+        onToggle: (self) => {
+          const el = inner.current
+          if (self.isActive) {
+            tween.play()
+            if (el) el.style.willChange = 'transform'
+          } else {
+            tween.pause()
+            if (el) el.style.willChange = 'auto'
+          }
+        },
       })
     })
   }, { scope: container })
@@ -49,7 +59,7 @@ export function Marquee() {
       className="relative overflow-hidden border-y border-[var(--color-wash-gold-14)] bg-[var(--color-surface-2)] py-4 md:py-5"
       aria-label="Designed, crafted, customized"
     >
-      <div className="marquee-inner flex w-max will-change-transform">
+      <div ref={inner} className="marquee-inner flex w-max">
         <Strip />
         <Strip hidden />
       </div>
