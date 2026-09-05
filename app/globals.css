@@ -1,0 +1,255 @@
+/* Hallmark · pre-emit critique: P5 H4 E5 S4 R5 V5
+ * macrostructure: Asymmetric Editorial Gallery · genre: editorial-soft · theme: spec-anchored
+ * tokens: --color-bg #1C2526 · --color-surface #22302F · --color-ivory #F5F0E8 · --color-gold #B8973A
+ */
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #1C2526;
+  --color-surface: #22302F;
+  --color-surface-2: #1e2a29;
+  --color-ivory: #F5F0E8;
+  --color-ivory-dim: #C8BFA8;
+  --color-gold: #B8973A;
+  --color-gold-soft: #d4c08a;
+  --color-linen: #E8E0D0;
+  --color-brown: #4A2E1A;
+  --color-wood: #8B5E3C;
+  --color-whatsapp: #25D366;
+  --color-wash-ivory: rgba(245, 240, 232, 0.04);
+  --color-wash-gold-10: rgba(184, 151, 58, 0.10);
+  --color-wash-gold-08: rgba(184, 151, 58, 0.08);
+  --color-wash-gold-12: rgba(184, 151, 58, 0.12);
+  --color-wash-gold-14: rgba(184, 151, 58, 0.14);
+  --color-glass: rgba(28, 37, 38, 0.88);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-dm-sans);
+  --radius-soft: 24px;
+  --radius-card: 20px;
+  --radius-pill: 9999px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring: cubic-bezier(0.23, 1, 0.32, 1);
+  --duration-fast: 140ms;
+  --duration-normal: 260ms;
+  --duration-slow: 420ms;
+}
+
+/* Hallmark discipline 5 — mobile non-negotiables */
+html, body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+html {
+  background: var(--color-bg);
+  color: var(--color-ivory);
+  scroll-behavior: auto;
+  scrollbar-gutter: stable;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-ivory);
+  font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-variant-ligatures: common-ligatures;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-bg);
+}
+
+* {
+  caret-color: var(--color-gold);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold) var(--color-surface);
+  /* Apple tap: instant feedback, thumb hysteresis */
+  touch-action: manipulation;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 9999px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Hallmark discipline 1 — reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Display helpers — every token-referenced, no inline hex — hardened for i18n/CJK/RTL */
+.text-display {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  min-width: 0;
+  text-wrap: balance;
+}
+.text-headline {
+  font-family: var(--font-serif);
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+  min-width: 0;
+  text-wrap: balance;
+}
+
+/* Harden: long German/CJK/emoji strings must not blow containers */
+[class*="text-"] {
+  overflow-wrap: anywhere;
+}
+
+/* Logical properties for RTL — system already uses flex, but guard arrow flips */
+[dir="rtl"] [aria-hidden="true"]:where(.arrow, [class*="→"]) {
+  transform: scaleX(-1);
+}
+
+/* FOUC guard — hide animating elements before JS paints so motion is the first paint */
+.headline .char { opacity: 0; transform: translateY(44px); }
+.tagline, .subcopy, .cta-btn, .hero-meta { opacity: 0; transition: opacity 350ms cubic-bezier(0.23,1,0.32,1), transform 350ms cubic-bezier(0.23,1,0.32,1); }
+.trust-card, .collection-card, .bespoke-animate, .bespoke-visual, .cta-animate,
+.intro-visual, .quote-block, .quote-wrap, .timeline-item, .trust-number,
+.process-step, .showroom-visual, .showroom-row, .showcase-card { opacity: 0; transition: opacity 350ms cubic-bezier(0.23,1,0.32,1), transform 350ms cubic-bezier(0.23,1,0.32,1); }
+
+/* @starting-style for declarative entry — off-main-thread when JS blocked */
+@starting-style {
+  .tagline, .subcopy, .cta-btn, .hero-meta,
+  .trust-card, .collection-card { opacity: 0; transform: translateY(14px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headline .char, .tagline, .subcopy, .cta-btn, .hero-meta,
+  .trust-card, .collection-card, .bespoke-animate, .bespoke-visual, .cta-animate,
+  .intro-visual, .quote-block, .quote-wrap, .timeline-item, .trust-number,
+  .process-step, .showroom-visual, .showroom-row, .showcase-card {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+noscript .headline .char,
+noscript .tagline, noscript .subcopy, noscript .cta-btn, noscript .hero-meta,
+noscript .trust-card, noscript .collection-card, noscript .bespoke-animate, noscript .bespoke-visual, noscript .cta-animate,
+noscript .intro-visual, noscript .quote-block, noscript .quote-wrap, noscript .timeline-item, noscript .trust-number,
+noscript .process-step, noscript .showroom-visual, noscript .showroom-row, noscript .showcase-card {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Soft editorial utilities — all token-referenced (Hallmark 48) */
+.glass-surface {
+  background: var(--color-glass);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+
+.hairline-gold {
+  border-color: var(--color-wash-gold-14);
+}
+
+.soft-card {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-wash-ivory);
+  background: var(--color-surface);
+}
+
+.soft-card:hover {
+  border-color: var(--color-wash-gold-12);
+}
+
+@media (hover: none) {
+  .soft-card:hover {
+    border-color: var(--color-wash-ivory);
+    transform: none;
+    box-shadow: none;
+  }
+}
+@media (hover: none) {
+  .group:hover { transform: none !important; }
+  .trust-card:hover, .collection-card:hover { transform: none !important; box-shadow: none !important; }
+  .group:hover [class*="border-[var(--color-gold)]"] { border-color: var(--color-wash-ivory) !important; }
+}
+
+/* Hide scrollbar for horizontal gallery but keep accessible */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* transitions.dev — t-card-resize, t-badge-pop, t-skeleton */
+.t-card-resize { transition: transform 300ms var(--ease-spring), box-shadow 300ms var(--ease-spring); }
+.t-badge-pop { animation: badgePop 200ms var(--ease-out-expo) both; }
+@keyframes badgePop { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .t-card-resize { transition: none; }
+  .t-badge-pop { animation: none; }
+  .t-skeleton { animation: none; }
+}
+
+/* 2 tape progress + 5 grain everywhere — brass boutique heavy */
+.tape-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--color-gold);
+  z-index: 9999;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.v2-grain-card {
+  position: relative;
+}
+.v2-grain-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+@keyframes subtle-glow {
+  0%, 100% { opacity: 0.08; transform: scale(1); }
+  50% { opacity: 0.14; transform: scale(1.04); }
+}
+@keyframes soft-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
