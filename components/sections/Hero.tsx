@@ -23,16 +23,17 @@ export function Hero() {
       tl.to(split.chars, {
         opacity: 1, y: 0, stagger: 0.018, duration: 0.5, ease: 'expo.out',
         onComplete: () => split.revert(),
-      })
-        // closing beat — "you." decodes after the split is reverted
+      }, 0)
+        // closing beat — "you." decodes in the background once the split is reverted.
+        // Copy cascade uses absolute positions so it never queues behind the decode.
         .to('.hero-you', {
           duration: 2.5, ease: 'none',
           scrambleText: { text: 'you.', chars: 'lowerCase', revealDelay: 1.2, speed: 0.3 },
-        }, '>')
-        .fromTo(container.current!.querySelector('.tagline'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: 'expo.out' }, '-=0.25')
-        .fromTo(container.current!.querySelector('.subcopy'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: 'expo.out' }, '-=0.25')
-        .fromTo(container.current!.querySelector('.cta-btn'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'expo.out' }, '-=0.25')
-        .fromTo(container.current!.querySelector('.hero-meta'), { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+        }, 1.05)
+        .fromTo(container.current!.querySelector('.tagline'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: 'expo.out' }, 0.7)
+        .fromTo(container.current!.querySelector('.subcopy'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: 'expo.out' }, 0.85)
+        .fromTo(container.current!.querySelector('.cta-btn'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.35, ease: 'expo.out' }, 1.0)
+        .fromTo(container.current!.querySelector('.hero-meta'), { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 1.15)
 
       // layered exit — scrim deepens, content lifts away
       gsap.to('.hero-dim', {
@@ -104,9 +105,7 @@ export function Hero() {
           </p>
 
           <div className="cta-btn flex flex-wrap items-center gap-4 pt-1">
-            <div style={{ viewTransitionName: 'hero-cta' } as React.CSSProperties}>
-              <WhatsAppButton size="large" />
-            </div>
+            <WhatsAppButton size="large" />
             <span className="text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.82rem] font-light">
               Free design consultation · No commitment
             </span>
@@ -116,8 +115,17 @@ export function Hero() {
           <div className="flex items-center gap-3 pt-2 text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.78rem]">
             <span className="inline-flex -space-x-1.5" aria-hidden="true">
               <span className="w-7 h-7 rounded-full bg-[var(--color-surface)] border border-[var(--color-bg)] flex items-center justify-center text-[0.62rem]">500+</span>
-              <span className="w-7 h-7 rounded-full bg-[var(--color-gold)]/20 border border-[var(--color-bg)]" />
-              <span className="w-7 h-7 rounded-full bg-[var(--color-ivory-dim)]/30 border border-[var(--color-bg)]" />
+              <span className="w-7 h-7 rounded-full bg-[var(--color-gold)]/20 border border-[var(--color-bg)] flex items-center justify-center">
+                <svg viewBox="0 0 28 28" className="w-7 h-7" aria-hidden="true">
+                  <path d="M9 23 V15 a5 5 0 0 1 10 0 V23 Z" fill="none" stroke="var(--color-gold)" strokeWidth="2" />
+                </svg>
+              </span>
+              <span className="w-7 h-7 rounded-full bg-[var(--color-ivory-dim)]/30 border border-[var(--color-bg)] flex items-center justify-center">
+                <svg viewBox="0 0 28 28" className="w-7 h-7" aria-hidden="true">
+                  <path d="M8 20 a6 6 0 0 1 12 0 Z" fill="var(--color-wood)" opacity="0.85" />
+                  <path d="M11 17.5 a3.2 3.2 0 0 1 6 0" fill="none" stroke="var(--color-ivory)" strokeWidth="1.4" opacity="0.8" />
+                </svg>
+              </span>
             </span>
             Trusted by hundreds across Chattogram
           </div>

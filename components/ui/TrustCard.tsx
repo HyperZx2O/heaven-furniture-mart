@@ -1,5 +1,7 @@
 'use client'
 
+import { spotlightMove } from '@/components/ui/spotlight'
+
 interface TrustCardProps {
   icon: React.ReactNode
   heading: string
@@ -9,11 +11,7 @@ interface TrustCardProps {
 export function TrustCard({ icon, heading, body }: TrustCardProps) {
   return (
     <div
-      onMouseMove={(e) => {
-        const r = (e.currentTarget as HTMLElement).getBoundingClientRect()
-        ;(e.currentTarget as HTMLElement).style.setProperty('--x', `${e.clientX - r.left}px`)
-        ;(e.currentTarget as HTMLElement).style.setProperty('--y', `${e.clientY - r.top}px`)
-      }}
+      onMouseMove={spotlightMove}
       className="group v2-grain-card relative flex flex-col gap-4 rounded-[var(--radius-card)] bg-[var(--color-surface)] border border-[var(--color-ivory)]/8 p-6 md:p-7 transition-all duration-[var(--duration-normal)] ease-[var(--ease-spring)] hover:border-[var(--color-gold)]/30 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.18)] min-w-0 overflow-hidden cursor-pointer"
     >
       <div

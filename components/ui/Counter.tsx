@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from '@/lib/gsap'
 
-export function Counter({ to = 500, suffix = '+' }: { to?: number; suffix?: string }) {
+export function Counter() {
+  const to = 500
+  const suffix = '+'
   const ref = useRef<HTMLSpanElement>(null)
   const [display, setDisplay] = useState('0')
   const reduce =

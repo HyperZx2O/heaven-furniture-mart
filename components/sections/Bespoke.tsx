@@ -135,7 +135,7 @@ export function Bespoke() {
           </ul>
 
           <p className="bespoke-animate text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.82rem] font-light">
-            Free design sketch within 24 hours, <a href="#cta" className="text-[var(--color-gold)] hover:underline underline-offset-4">chat on WhatsApp →</a>
+            Have a room in mind? <a href="#cta" className="text-[var(--color-gold)] hover:underline underline-offset-4">chat on WhatsApp →</a>
           </p>
         </div>
       </div>

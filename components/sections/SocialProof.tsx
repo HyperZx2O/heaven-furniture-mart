@@ -77,8 +77,8 @@ export function SocialProof() {
             </cite>
             <span className="mt-4 inline-flex gap-1.5 justify-center" aria-hidden="true">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-              <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-ivory)]/30" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-ivory)]/30" />
             </span>
           </blockquote>
         </div>
@@ -125,7 +125,7 @@ export function SocialProof() {
       <div className="py-10 px-5 md:px-8 lg:px-10 flex flex-col items-center text-center">
         <div className="trust-number rounded-[var(--radius-card)] bg-[var(--color-surface)] border border-[var(--color-ivory)]/8 px-10 md:px-14 py-8 md:py-10 shadow-[0_12px_32px_rgba(0,0,0,0.18)]">
           <span className="block text-[var(--color-gold)] font-[var(--font-serif)] font-light text-[clamp(3.2rem,8vw,5.2rem)] leading-none tracking-[-0.03em]">
-            <Counter to={500} suffix="+" />
+            <Counter />
           </span>
           <span className="mt-2 block text-[var(--color-ivory-dim)] font-[var(--font-sans)] font-light text-[0.9rem] tracking-wide">
             Happy homeowners across Chattogram

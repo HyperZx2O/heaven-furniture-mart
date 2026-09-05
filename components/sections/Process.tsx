@@ -7,7 +7,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 
 const steps = [
   { n: '01', title: 'Free design consultation', body: 'Sit with our team. We understand your space before we touch a single plank.' },
-  { n: '02', title: 'Free sketch within 24 hours', body: 'You see your piece on paper the next day — dimensions, material, finish.' },
+  { n: '02', title: 'Approve the design first', body: 'You sign off on dimensions, material, and finish before we touch a single plank.' },
   { n: '03', title: 'Hand-built in 14–21 days', body: 'In-house artisans build your piece from scratch. Nothing mass-produced.' },
   { n: '04', title: 'Delivered & installed', body: 'We bring it home and set it up. No extra charges, no logistics stress.' },
 ]

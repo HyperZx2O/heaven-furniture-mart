@@ -26,7 +26,6 @@ export function Showroom() {
             eyebrow="Visit us"
             title="See it before you believe it."
             subtitle="Our Agrabad showroom is where dimensions become decisions. Touch the wood, test the comfort, meet the people who will build your piece."
-            align="left"
           />
           <ul className="mt-7 flex flex-col gap-4 list-none m-0 p-0">
             <li className="showroom-row flex items-start gap-3 min-w-0">

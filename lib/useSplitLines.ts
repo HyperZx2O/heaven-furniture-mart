@@ -1,7 +1,7 @@
 'use client'
 
 import { useGSAP } from '@gsap/react'
-import { gsap, SplitText } from '@/lib/gsap'
+import { gsap, ScrollTrigger, SplitText } from '@/lib/gsap'
 import type { RefObject } from 'react'
 
 type SplitLinesOpts = {
@@ -9,8 +9,6 @@ type SplitLinesOpts = {
   selector: string
   /** what to split into — lines for masked rises, words for scrubbed quotes */
   splitType?: 'lines' | 'words'
-  /** wrap units in overflow-clip masks (masked rise). Only applies to lines. */
-  masked?: boolean
   /** play once on enter (false) or tie progress to scroll (true | lag seconds) */
   scrub?: boolean | number
   start?: string
@@ -28,7 +26,6 @@ export function useSplitLines(
   const {
     selector,
     splitType = 'lines',
-    masked = true,
     scrub = false,
     start = 'top 80%',
     end = 'bottom 45%',
@@ -47,13 +44,14 @@ export function useSplitLines(
 
         let split: SplitText | null = null
         let tween: gsap.core.Tween | null = null
+        let live = true
 
         const build = () => {
           tween?.kill()
           split?.revert()
           split = SplitText.create(el, {
             type: splitType,
-            mask: splitType === 'lines' && masked ? 'lines' : undefined,
+            mask: splitType === 'lines' ? 'lines' : undefined,
           })
           const units = splitType === 'lines' ? split.lines : split.words
           if (!units?.length) return
@@ -84,7 +82,18 @@ export function useSplitLines(
 
         build()
 
+        // re-split once webfonts land — line breaks measured under the
+        // fallback font go stale after the swap
+        if (typeof document !== 'undefined' && document.fonts) {
+          document.fonts.ready.then(() => {
+            if (!live) return
+            build()
+            ScrollTrigger.refresh()
+          })
+        }
+
         return () => {
+          live = false
           tween?.kill()
           split?.revert()
         }

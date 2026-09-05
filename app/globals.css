@@ -167,34 +167,7 @@ noscript .process-step, noscript .showroom-visual, noscript .showroom-row, noscr
   transform: none !important;
 }
 
-/* Soft editorial utilities — all token-referenced (Hallmark 48) */
-.glass-surface {
-  background: var(--color-glass);
-  backdrop-filter: blur(16px) saturate(1.15);
-  -webkit-backdrop-filter: blur(16px) saturate(1.15);
-}
-
-.hairline-gold {
-  border-color: var(--color-wash-gold-14);
-}
-
-.soft-card {
-  border-radius: var(--radius-card);
-  border: 1px solid var(--color-wash-ivory);
-  background: var(--color-surface);
-}
-
-.soft-card:hover {
-  border-color: var(--color-wash-gold-12);
-}
-
-@media (hover: none) {
-  .soft-card:hover {
-    border-color: var(--color-wash-ivory);
-    transform: none;
-    box-shadow: none;
-  }
-}
+/* Touch devices: hover states never engage, so disable their transforms */
 @media (hover: none) {
   .group:hover { transform: none !important; }
   .trust-card:hover, .collection-card:hover { transform: none !important; box-shadow: none !important; }
@@ -210,14 +183,13 @@ noscript .process-step, noscript .showroom-visual, noscript .showroom-row, noscr
   display: none;
 }
 
-/* transitions.dev — t-card-resize, t-badge-pop, t-skeleton */
+/* transitions.dev — t-card-resize, t-badge-pop */
 .t-card-resize { transition: transform 300ms var(--ease-spring), box-shadow 300ms var(--ease-spring); }
 .t-badge-pop { animation: badgePop 200ms var(--ease-out-expo) both; }
 @keyframes badgePop { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @media (prefers-reduced-motion: reduce) {
   .t-card-resize { transition: none; }
   .t-badge-pop { animation: none; }
-  .t-skeleton { animation: none; }
 }
 
 /* 2 tape progress + 5 grain everywhere — brass boutique heavy */
@@ -243,13 +215,4 @@ noscript .process-step, noscript .showroom-visual, noscript .showroom-row, noscr
   opacity: 0.35;
   pointer-events: none;
   border-radius: inherit;
-}
-
-@keyframes subtle-glow {
-  0%, 100% { opacity: 0.08; transform: scale(1); }
-  50% { opacity: 0.14; transform: scale(1.04); }
-}
-@keyframes soft-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
 }

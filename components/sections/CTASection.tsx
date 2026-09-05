@@ -29,7 +29,6 @@ export function CTASection() {
     <section
       ref={container}
       id="cta"
-      style={{ viewTransitionName: 'cta-hero' } as React.CSSProperties}
       className="relative overflow-hidden px-5 md:px-8 lg:px-10 py-[clamp(3.5rem,8vw,6.5rem)] [content-visibility:auto] [contain-intrinsic-size:auto_600px]"
     >
       {/* Soft wash behind CTA — gentle, not harsh */}
@@ -38,8 +37,8 @@ export function CTASection() {
 
       <div className="relative z-10 max-w-3xl mx-auto text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-gold)]/18 bg-[var(--color-bg)] px-3.5 py-1.5 mb-6">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-          <span className="text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.76rem] tracking-wide">Replies within 2 hours · Free sketch included</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)]" aria-hidden="true" />
+          <span className="text-[var(--color-ivory-dim)] font-[var(--font-sans)] text-[0.76rem] tracking-wide">Free design consultation · No commitment</span>
         </div>
 
         <h2 className="cta-animate text-display text-[var(--color-ivory)] font-[var(--font-serif)] font-light text-[clamp(1.9rem,4vw,2.9rem)] leading-[1.05]">

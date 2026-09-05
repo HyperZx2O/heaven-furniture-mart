@@ -9,21 +9,17 @@ interface SectionHeadingProps {
   eyebrow?: string
   title: string
   subtitle?: string
-  align?: 'left' | 'center'
-  className?: string
 }
 
 export function SectionHeading({
   eyebrow,
   title,
   subtitle,
-  align = 'left',
-  className = '',
 }: SectionHeadingProps) {
   const container = useRef<HTMLDivElement>(null)
 
   // masked line-rise on the title — one upgrade, every heading on the page
-  useSplitLines(container, { selector: '.title', splitType: 'lines', masked: true })
+  useSplitLines(container, { selector: '.title', splitType: 'lines' })
 
   useGSAP(() => {
     const mm = gsap.matchMedia()
@@ -49,7 +45,7 @@ export function SectionHeading({
   return (
     <div
       ref={container}
-      className={`${align === 'center' ? 'text-center items-center' : 'text-left items-start'} flex flex-col min-w-0 ${className}`}
+      className="text-left items-start flex flex-col min-w-0"
     >
       {eyebrow && (
         <p className="eyebrow inline-flex items-center gap-2 text-[var(--color-gold)] text-[0.78rem] font-[var(--font-sans)] font-medium tracking-[0.14em] mb-4">

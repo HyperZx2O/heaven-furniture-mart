@@ -1,6 +1,15 @@
+'use client'
+
 import Link from 'next/link'
+import { useScrollTo } from '@/components/providers/LenisProvider'
 
 export function Footer() {
+  const scrollTo = useScrollTo()
+  const explore = (e: React.MouseEvent, target: string) => {
+    e.preventDefault()
+    scrollTo(target)
+    history.pushState(null, '', target)
+  }
   return (
     <footer
       className="bg-[var(--color-bg)] border-t border-[var(--color-ivory)]/8"
@@ -55,11 +64,11 @@ export function Footer() {
           <nav className="min-w-0" aria-label="Explore">
             <p className="text-[var(--color-ivory)] font-[var(--font-sans)] text-[0.78rem] font-medium tracking-[0.12em] mb-3">Explore</p>
             <div className="flex flex-col gap-1.5 text-[var(--color-ivory-dim)] font-[var(--font-sans)] font-light text-[0.86rem] leading-relaxed">
-              <a href="#collections" className="hover:text-[var(--color-ivory)] transition-colors w-fit">Collections</a>
-              <a href="#bespoke" className="hover:text-[var(--color-ivory)] transition-colors w-fit">Bespoke</a>
-              <a href="#process" className="hover:text-[var(--color-ivory)] transition-colors w-fit">Process</a>
-              <a href="#showroom" className="hover:text-[var(--color-ivory)] transition-colors w-fit">Showroom</a>
-              <a href="#cta" className="hover:text-[var(--color-ivory)] transition-colors w-fit">Free consultation</a>
+              <a href="#collections" onClick={(e) => explore(e, '#collections')} className="hover:text-[var(--color-ivory)] transition-colors w-fit">Collections</a>
+              <a href="#bespoke" onClick={(e) => explore(e, '#bespoke')} className="hover:text-[var(--color-ivory)] transition-colors w-fit">Bespoke</a>
+              <a href="#process" onClick={(e) => explore(e, '#process')} className="hover:text-[var(--color-ivory)] transition-colors w-fit">Process</a>
+              <a href="#showroom" onClick={(e) => explore(e, '#showroom')} className="hover:text-[var(--color-ivory)] transition-colors w-fit">Showroom</a>
+              <a href="#cta" onClick={(e) => explore(e, '#cta')} className="hover:text-[var(--color-ivory)] transition-colors w-fit">Free consultation</a>
             </div>
           </nav>
 

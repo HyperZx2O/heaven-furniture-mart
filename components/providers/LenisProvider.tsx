@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
 import ReactLenis, { useLenis } from 'lenis/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -9,15 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export function LenisProvider({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
   const lenis = useLenis()
-
-  useEffect(() => {
-    if (lenis) {
-      lenis.stop()
-      requestAnimationFrame(() => lenis.start())
-    }
-  }, [pathname, lenis])
 
   useEffect(() => {
     if (!lenis) return
@@ -37,4 +28,16 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
   }, [lenis])
 
   return <ReactLenis root>{children}</ReactLenis>
+}
+
+/** Smooth in-page navigation through Lenis instead of native jumps. */
+export function useScrollTo() {
+  const lenis = useLenis()
+  return (target: string) => {
+    if (lenis) {
+      lenis.scrollTo(target, { duration: 1.4 })
+    } else {
+      document.querySelector(target)?.scrollIntoView()
+    }
+  }
 }

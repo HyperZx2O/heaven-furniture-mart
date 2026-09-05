@@ -19,7 +19,7 @@ export function WhatsAppButton({ variant = 'inline', className = '', size = 'def
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
-        className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-2 rounded-full bg-[var(--color-whatsapp)] text-white shadow-[0_8px_28px_rgba(0,0,0,0.28)] transition-all duration-[var(--duration-normal)] ease-[var(--ease-spring)] hover:scale-[1.03] hover:shadow-[0_10px_36px_rgba(0,0,0,0.32)] active:scale-[0.97] mb-[env(safe-area-inset-bottom)] me-[env(safe-area-inset-right)] ${className}`}
+        className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-2 rounded-full bg-[var(--color-whatsapp)] text-[var(--color-ivory)] shadow-[0_8px_28px_rgba(0,0,0,0.28)] transition-all duration-[var(--duration-normal)] ease-[var(--ease-spring)] hover:scale-[1.03] hover:shadow-[0_10px_36px_rgba(0,0,0,0.32)] active:scale-[0.97] mb-[env(safe-area-inset-bottom)] me-[env(safe-area-inset-right)] ${className}`}
       >
         {/* mobile: icon-only circle */}
         <span className="flex md:hidden items-center justify-center w-14 h-14 rounded-full bg-[var(--color-whatsapp)]">

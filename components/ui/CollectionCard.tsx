@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useScrollTo } from '@/components/providers/LenisProvider'
+import { spotlightMove } from '@/components/ui/spotlight'
 
 interface CollectionCardProps {
   category: string
@@ -10,13 +12,10 @@ interface CollectionCardProps {
 }
 
 export function CollectionCard({ category, products, children, isBespoke = false }: CollectionCardProps) {
+  const scrollTo = useScrollTo()
   return (
     <div
-      onMouseMove={(e) => {
-        const r = (e.currentTarget as HTMLElement).getBoundingClientRect()
-        ;(e.currentTarget as HTMLElement).style.setProperty('--x', `${e.clientX - r.left}px`)
-        ;(e.currentTarget as HTMLElement).style.setProperty('--y', `${e.clientY - r.top}px`)
-      }}
+      onMouseMove={spotlightMove}
       className="group t-card-resize v2-grain-card relative flex h-full flex-col rounded-[var(--radius-card)] bg-[var(--color-surface)] border border-[var(--color-ivory)]/8 overflow-hidden hover:border-[var(--color-gold)]/30 hover:-translate-y-1 hover:shadow-[0_14px_36px_rgba(0,0,0,0.22)] min-w-0 cursor-pointer"
     >
       <div
@@ -42,14 +41,9 @@ export function CollectionCard({ category, products, children, isBespoke = false
           href="#cta"
           aria-label={isBespoke ? `Tell us what you need for ${category}` : `Explore ${category} collection`}
           onClick={(e) => {
-            const vt = (document as unknown as { startViewTransition?: (cb: () => void) => void }).startViewTransition
-            if (vt) {
-              e.preventDefault()
-              vt(() => {
-                document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                history.pushState(null, '', '#cta')
-              })
-            }
+            e.preventDefault()
+            scrollTo('#cta')
+            history.pushState(null, '', '#cta')
           }}
           className="mt-4 inline-flex items-center gap-1.5 min-h-[44px] py-2 text-[var(--color-gold)] font-[var(--font-sans)] text-[0.84rem] font-medium tracking-wide hover:gap-2.5 active:gap-1.5 transition-all duration-[var(--duration-normal)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] rounded-full"
         >

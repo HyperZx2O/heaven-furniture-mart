@@ -65,7 +65,6 @@ export function BrandIntro() {
             eyebrow="Est. 2020, Chattogram"
             title="One of Chattogram's leading bespoke furniture brands."
             subtitle="We design and craft custom furniture, sofas, beds, dining sets and office pieces, built around what you actually want, not pulled off a shelf. Every piece reflects your lifestyle, your taste and your comfort."
-            align="left"
           />
 
           <blockquote className="quote-block relative rounded-[var(--radius-card)] bg-[var(--color-surface)] border border-[var(--color-gold)]/18 p-6 md:p-7">

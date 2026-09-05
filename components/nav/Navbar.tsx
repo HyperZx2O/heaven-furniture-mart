@@ -1,7 +1,11 @@
 'use client'
 
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+
+// weak devices skip the SVG displacement graph — frosted blur is enough
+const allowGlass =
+  typeof navigator === 'undefined' || (navigator.hardwareConcurrency || 8) > 4
 
 declare global {
   interface Window {
@@ -15,11 +19,6 @@ export function Navbar() {
   const glassRef = useRef<{ destroy: () => void } | null>(null)
   const glassTimer = useRef<number | null>(null)
   const glassReady = useRef(false)
-  // weak devices skip the SVG displacement graph — frosted blur is enough
-  const allowGlass = useMemo(
-    () => typeof navigator === 'undefined' || (navigator.hardwareConcurrency || 8) > 4,
-    []
-  )
 
   useEffect(() => {
     let ticking = false
@@ -102,7 +101,7 @@ export function Navbar() {
       cancelAnimationFrame(raf)
       if (glassTimer.current) clearTimeout(glassTimer.current)
     }
-  }, [scrolled, allowGlass])
+  }, [scrolled])
 
   // final teardown on unmount only
   useEffect(() => () => {
@@ -124,7 +123,7 @@ export function Navbar() {
         ref={pillRef as React.RefObject<HTMLElement>}
         className={`pointer-events-auto flex items-center justify-between gap-4 w-full transition-[transform,background,border-color,padding,box-shadow] duration-300 ease-[var(--ease-spring)] ${
           scrolled
-            ? 'max-w-5xl rounded-full px-5 md:px-7 py-3.5 bg-[linear-gradient(180deg,rgba(245,240,232,0.08),rgba(245,240,232,0.02))] border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-1px_0_rgba(0,0,0,0.12),0_8px_28px_rgba(0,0,0,0.28),0_1px_0_rgba(184,151,58,0.12)] backdrop-blur-[3px]'
+            ? 'max-w-5xl rounded-full px-5 md:px-7 py-3.5 bg-[linear-gradient(180deg,rgba(245,240,232,0.08),rgba(245,240,232,0.02))] border border-[var(--color-ivory)]/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-1px_0_rgba(0,0,0,0.12),0_8px_28px_rgba(0,0,0,0.28),0_1px_0_rgba(184,151,58,0.12)] backdrop-blur-[3px]'
             : 'bg-transparent border-b border-transparent px-5 md:px-8 lg:px-10 py-6 rounded-none shadow-none'
         }`}
         style={
@@ -141,7 +140,6 @@ export function Navbar() {
         <Link
           href="/"
           className="min-w-0 flex flex-col leading-none"
-          style={{ viewTransitionName: 'masthead' } as React.CSSProperties}
         >
           <span className="text-[var(--color-ivory)] font-[var(--font-serif)] font-normal text-[1.15rem] md:text-[1.35rem] tracking-wide overflow-wrap-anywhere">
             Heaven Furniture Mart
